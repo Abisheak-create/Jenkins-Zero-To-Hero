@@ -59,14 +59,23 @@ agent any // This tells Jenkins to use the Maven/Java you just installed on the 
         }
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
-                sh '''
+            sh '''
+                    # 1. Identify ourselves to Git
                     git config user.email "abisheak578@gmail.com"
                     git config user.name "Abisheak-create"
-                    BUILD_NUMBER=${BUILD_NUMBER}
-                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
-                    git add java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
-                    git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                    git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+
+                    # 2. Use the "Search and Replace" that works every time (Regex)
+                    # It finds 'image:' and replaces everything after it on that line
+                    sed -i "s|image:.*|image: abisheak469/ultimate-cicd:${BUILD_NUMBER}|g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
+
+                    # 3. Only commit and push IF the file actually changed
+                    if git diff --exit-code java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml; then
+                        echo "No changes detected in deployment.yml. Skipping git push."
+                    else
+                        git add java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
+                        git commit -m "Update deployment image to version ${BUILD_NUMBER} [skip ci]"
+                        git push https://${GITHUB_TOKEN}@github.com/Abisheak-create/Jenkins-Zero-To-Hero.git HEAD:main
+                    fi
                 '''
             }
         }
