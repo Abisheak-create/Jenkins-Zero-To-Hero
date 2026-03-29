@@ -23,7 +23,7 @@ agent any // This tells Jenkins to use the Maven/Java you just installed on the 
     }
     stage('Static Code Analysis') {
       environment {
-        SONAR_URL = "http://65.2.79.175:9000/"
+        SONAR_URL = "http://13.200.235.155:9000/"
       }
       steps {
         withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
