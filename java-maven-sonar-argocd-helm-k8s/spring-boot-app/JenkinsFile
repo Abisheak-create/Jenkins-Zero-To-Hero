@@ -4,18 +4,15 @@ pipeline {
       image 'maven:3.9.6-eclipse-temurin-17'
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
     }
-  }
+  }    
   stages {
-        stage('Cleanup & Prep') {
+    stage('Cleanup & Prep') {
             steps {
                 // Wipe the workspace at the start to prevent version conflicts
                 cleanWs()
                 sh 'docker system prune -f || true'
             }
-        }      
-        }
-
-  stages {
+    }   
     stage('Checkout') {
       steps {
         sh 'echo passed'
