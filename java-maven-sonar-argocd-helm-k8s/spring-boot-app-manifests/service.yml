@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: spring-boot-app-service
 spec:
-  type: NodePort
+  type: LoadBalancer # Change this for automatic AWS access
   ports:
   - name: http
-    port: 80
-    targetPort: 8080
+    port: 80         # Port on the Load Balancer
+    targetPort: 8080 # Port where your Spring Boot app is listening
     protocol: TCP
   selector:
-    app: spring-boot-app
+    app: spring-boot-app # MUST match the label in your deployment.yml
