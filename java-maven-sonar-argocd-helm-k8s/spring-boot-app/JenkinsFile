@@ -12,7 +12,9 @@ pipeline {
                 cleanWs()
                 sh 'docker system prune -f || true'
             }
+        }      
         }
+
   stages {
     stage('Checkout') {
       steps {
