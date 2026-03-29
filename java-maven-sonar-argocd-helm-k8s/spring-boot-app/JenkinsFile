@@ -6,6 +6,14 @@ pipeline {
     }
   }
   stages {
+        stage('Cleanup & Prep') {
+            steps {
+                // Wipe the workspace at the start to prevent version conflicts
+                cleanWs()
+                sh 'docker system prune -f || true'
+            }
+        }
+  stages {
     stage('Checkout') {
       steps {
         sh 'echo passed'
