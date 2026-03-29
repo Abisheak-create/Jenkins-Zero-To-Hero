@@ -5,19 +5,19 @@ pipeline {
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
     }
   }    
-  stages {
+  stages {  
+    stage('Checkout') {
+      steps {
+        sh 'echo passed'
+        git branch: 'main', url: 'https://github.com/Abisheak-create/Jenkins-Zero-To-Hero.git'
+      }
+    }
     stage('Cleanup & Prep') {
             steps {
                 // Wipe the workspace at the start to prevent version conflicts
                 cleanWs()
                 sh 'docker system prune -f || true'
             }
-    }   
-    stage('Checkout') {
-      steps {
-        sh 'echo passed'
-        git branch: 'main', url: 'https://github.com/Abisheak-create/Jenkins-Zero-To-Hero.git'
-      }
     }
     stage('Build and Test') {
       steps {
