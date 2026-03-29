@@ -14,13 +14,6 @@ agent any // This tells Jenkins to use the Maven/Java you just installed on the 
         git branch: 'main', url: 'https://github.com/Abisheak-create/Jenkins-Zero-To-Hero.git'
       }
     }
-    stage('Cleanup & Prep') {
-            steps {
-                // Wipe the workspace at the start to prevent version conflicts
-                cleanWs()
-                sh 'docker system prune -f || true'
-            }
-    }
     stage('Build and Test') {
       steps {
         sh 'ls -ltr'
