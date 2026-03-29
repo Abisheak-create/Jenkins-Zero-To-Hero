@@ -1,5 +1,5 @@
 # Use the same Java version you used to build (Java 17 is safer)
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:21-jre-alpine
 
 # Use a wildcard to find the jar file regardless of its name
 WORKDIR /opt/app
