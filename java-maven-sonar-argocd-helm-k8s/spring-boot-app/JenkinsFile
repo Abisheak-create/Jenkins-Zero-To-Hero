@@ -1,11 +1,13 @@
 pipeline {
-  agent {
-    docker {
-      image 'maven:3.9.6-eclipse-temurin-17'
-      args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
-    }
-  }    
+agent any // This tells Jenkins to use the Maven/Java you just installed on the host
   stages {  
+    stage('Cleanup & Prep') {
+            steps {
+                cleanWs()
+                // Now this will work because the host has Docker
+                sh 'docker system prune -f || true'
+            }
+        } 
     stage('Checkout') {
       steps {
         sh 'echo passed'
