@@ -37,7 +37,6 @@ agent any // This tells Jenkins to use the Maven/Java you just installed on the 
       }
     }
     stage('Build and Push Docker Image') {
-      agent any
       environment {
         DOCKER_IMAGE = "abisheak469/ultimate-cicd:${BUILD_NUMBER}"
         // DOCKERFILE_LOCATION = "java-maven-sonar-argocd-helm-k8s/spring-boot-app/Dockerfile"
